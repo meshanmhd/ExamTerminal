@@ -1,29 +1,41 @@
-Server Algorithm:
+
+ALGORITHM FOR TCP SERVER AND CLIENT
+
+SERVER (server.c)
+
 1. Start the program.
-2. Create a UDP socket using socket().
-3. Initialize the server address structure.
-4. Assign the IP address as INADDR_ANY and port number as 8080.
-5. Bind the socket to the server address using bind().
-6. Receive an integer from the client using recvfrom().
-7. Initialize sum = 0.
-8. Store the received number in a temporary variable.
-9. If the number is negative, convert it into a positive number.
-10. Repeat while the temporary number is greater than 0:
-    - Extract the last digit using temp % 10.
-    - Add the digit to sum.
-    - Remove the last digit using temp / 10.
-11. Send the sum to the client using sendto().
-12. Display the sum of digits.
-13. Close the socket using close().
-14. Stop the program.
-Client Algorithm:
+2. Include stdio.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, new_sock, num, temp, digit, sum, server_addr and client_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, INADDR_ANY and port 8080.
+7. Bind the socket using bind().
+8. Listen for client connections using listen().
+9. Accept the client connection using accept().
+10. Receive the number using recv().
+11. Initialize sum = 0 and temp = num.
+12. If num is negative, convert it into a positive number.
+13. Calculate sum of digits using a while loop:
+    - Repeat while temp > 0.
+    - Extract digit = temp % 10.
+    - Calculate sum = sum + digit.
+    - Update temp = temp / 10.
+14. Send the sum using send().
+15. Close the client and server sockets using close().
+16. Stop the program.
+
+---------------- CLIENT (client.c) ----------------
+
 1. Start the program.
-2. Create a UDP socket using socket().
-3. Initialize the server address structure.
-4. Assign the server IP address as 127.0.0.1 and port number as 8080.
-5. Read an integer from the user.
-6. Send the integer to the server using sendto().
-7. Receive the sum of digits from the server using recvfrom().
-8. Display the sum of digits.
-9. Close the socket using close().
-10. Stop the program.
+2. Include stdio.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, num, sum and server_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, port 8080 and IP 127.0.0.1.
+7. Connect to the server using connect().
+8. Read a number using scanf().
+9. Send the number using send().
+10. Receive the sum using recv().
+11. Display the sum of digits.
+12. Close the socket using close().
+13. Stop the program.

@@ -1,28 +1,41 @@
-Server Algorithm:
+
+ALGORITHM FOR TCP SERVER AND CLIENT
+
+SERVER (server.c)
+
 1. Start the program.
-2. Create a UDP socket using socket().
-3. Initialize the server address structure.
-4. Assign the IP address as INADDR_ANY and port number as 8080.
-5. Bind the socket to the server address using bind().
-6. Receive an integer from the client using recvfrom().
-7. Initialize flag = 1.
-8. If the number is less than or equal to 1, set flag = 0.
-9. Check whether the number is divisible by any integer from 2 to num / 2:
-   - If num % i == 0, set flag = 0 and stop the loop.
-10. If flag = 1, store "Prime" in the result.
-11. Otherwise, store "Not Prime" in the result.
-12. Send the result to the client using sendto().
-13. Display the result.
-14. Close the socket using close().
-15. Stop the program.
-Client Algorithm:
+2. Include stdio.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, new_sock, num, i, flag, result[], server_addr and client_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, INADDR_ANY and port 8080.
+7. Bind the socket using bind().
+8. Listen for client connections using listen().
+9. Accept the client connection using accept().
+10. Receive the number using recv().
+11. Initialize flag = 1.
+12. If num <= 1, set flag = 0.
+13. Check divisibility from 2 to num / 2:
+    - If num % i == 0, set flag = 0.
+    - Stop the loop.
+14. If flag = 1, store "Prime".
+15. Otherwise, store "Not Prime".
+16. Send the result using send().
+17. Close the client and server sockets using close().
+18. Stop the program.
+
+---------------- CLIENT (client.c) ----------------
+
 1. Start the program.
-2. Create a UDP socket using socket().
-3. Initialize the server address structure.
-4. Assign the server IP address as 127.0.0.1 and port number as 8080.
-5. Read an integer from the user.
-6. Send the integer to the server using sendto().
-7. Receive the result from the server using recvfrom().
-8. Display whether the number is Prime or Not Prime.
-9. Close the socket using close().
-10. Stop the program.
+2. Include stdio.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, num, result[] and server_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, port 8080 and IP 127.0.0.1.
+7. Connect to the server using connect().
+8. Read a number using scanf().
+9. Send the number using send().
+10. Receive the result using recv().
+11. Display Prime or Not Prime.
+12. Close the socket using close().
+13. Stop the program.

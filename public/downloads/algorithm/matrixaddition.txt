@@ -1,32 +1,38 @@
-Server Algorithm:
+
+ALGORITHM FOR TCP SERVER AND CLIENT
+
+SERVER (server.c)
+
 1. Start the program.
-2. Create a UDP socket using socket().
-3. Initialize the server address structure.
-4. Assign the IP address as INADDR_ANY and port number as 8080.
-5. Bind the socket to the server address using bind().
-6. Receive the number of rows (r) from the client using recvfrom().
-7. Receive the number of columns (c) from the client.
-8. Receive Matrix A from the client.
-9. Receive Matrix B from the client.
-10. Add the corresponding elements of both matrices:
-    - sum[i][j] = a[i][j] + b[i][j]
-11. Display the resultant matrix.
-12. Send the resultant matrix to the client using sendto().
-13. Close the socket using close().
+2. Include stdio.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, new_sock, r, c, a[][], b[][], sum[][], i, j, server_addr and client_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, INADDR_ANY and port 8080.
+7. Bind the socket using bind().
+8. Listen for client connections using listen().
+9. Accept the client connection using accept().
+10. Receive rows, columns, Matrix A and Matrix B using recv().
+11. Add the matrices using nested for loops:
+    - Repeat for i = 0 to r - 1.
+    - Repeat for j = 0 to c - 1.
+    - Calculate sum[i][j] = a[i][j] + b[i][j].
+12. Send the resultant matrix using send().
+13. Close the client and server sockets using close().
 14. Stop the program.
-Client Algorithm:
+
+---------------- CLIENT (client.c) ----------------
+
 1. Start the program.
-2. Create a UDP socket using socket().
-3. Initialize the server address structure.
-4. Assign the server IP address as 127.0.0.1 and port number as 8080.
-5. Read the number of rows and columns from the user.
-6. Read the elements of Matrix A.
-7. Read the elements of Matrix B.
-8. Send the number of rows (r) to the server using sendto().
-9. Send the number of columns (c) to the server.
-10. Send Matrix A to the server.
-11. Send Matrix B to the server.
-12. Receive the resultant matrix from the server using recvfrom().
-13. Display the resultant matrix.
-14. Close the socket using close().
-15. Stop the program.
+2. Include stdio.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, r, c, a[][], b[][], sum[][], i, j and server_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, port 8080 and IP 127.0.0.1.
+7. Connect to the server using connect().
+8. Read rows, columns, Matrix A and Matrix B using scanf().
+9. Send rows, columns, Matrix A and Matrix B using send().
+10. Receive the resultant matrix using recv().
+11. Display the resultant matrix.
+12. Close the socket using close().
+13. Stop the program.

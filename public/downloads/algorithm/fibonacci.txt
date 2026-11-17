@@ -1,26 +1,40 @@
-Server Algorithm:
+
+ALGORITHM FOR TCP SERVER AND CLIENT
+
+SERVER (server.c)
+
 1. Start the program.
-2. Create a UDP socket using socket().
-3. Initialize the server address structure.
-4. Assign the IP address as INADDR_ANY and port number as 8080.
-5. Bind the socket to the server address using bind().
-6. Receive the number of terms (n) from the client using recvfrom().
-7. Initialize a = 0 and b = 1.
-8. Repeat the following steps for i = 0 to n - 1:
-   - Store a in fib[i].
-   - Calculate c = a + b.
-   - Assign a = b and b = c.
-9. Send the Fibonacci series to the client using sendto().
-10. Close the socket using close().
-11. Stop the program.
-Client Algorithm:
+2. Include stdio.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, new_sock, n, a, b, c, fib[], i, server_addr and client_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, INADDR_ANY and port 8080.
+7. Bind the socket using bind().
+8. Listen for client connections using listen().
+9. Accept the client connection using accept().
+10. Receive the number of terms (n) using recv().
+11. Initialize a = 0 and b = 1.
+12. Generate Fibonacci series using a for loop:
+    - Repeat from i = 0 to n - 1.
+    - Store a in fib[i].
+    - Calculate c = a + b.
+    - Assign a = b and b = c.
+13. Send the Fibonacci series using send().
+14. Close the client and server sockets using close().
+15. Stop the program.
+
+---------------- CLIENT (client.c) ----------------
+
 1. Start the program.
-2. Create a UDP socket using socket().
-3. Initialize the server address structure.
-4. Assign the server IP address as 127.0.0.1 and port number as 8080.
-5. Read the number of terms (n) from the user.
-6. Send n to the server using sendto().
-7. Receive the Fibonacci series from the server using recvfrom().
-8. Display the Fibonacci series using a for loop.
-9. Close the socket using close().
-10. Stop the program.
+2. Include stdio.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, n, fib[] and server_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, port 8080 and IP 127.0.0.1.
+7. Connect to the server using connect().
+8. Read the number of terms using scanf().
+9. Send n using send().
+10. Receive the Fibonacci series using recv().
+11. Display the Fibonacci series.
+12. Close the socket using close().
+13. Stop the program.

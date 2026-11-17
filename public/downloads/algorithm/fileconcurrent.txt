@@ -1,36 +1,46 @@
-Server Algorithm
-1. Start.
-2. Create a TCP socket using socket().
-3. Initialize the server address structure with IP address INADDR_ANY and port number 8080.
-4. Bind the socket to the specified address using bind().
-5. Listen for client connections using listen().
-6. Display "File Server Running".
-7. Repeat the following steps continuously:
-   1. Accept the client connection using accept().
-   2. Create a child process using fork() to handle the client.
-   3. In the child process:
-      - Close the server socket.
-      - Receive the filename from the client using recv().
-      - Open the requested file in read mode using fopen().
-      - Send the server PID to the client.
-      - If the file does not exist, send an appropriate error message.
-      - Otherwise:
-        - Read the file line by line using fgets().
-        - Send the file contents to the client using send().
-        - Close the file.
-      - Close the client socket.
-      - Terminate the child process using exit().
-   4. In the parent process, close the client socket.
-8. Stop.
-Client Algorithm
-1. Start.
-2. Create a TCP socket using socket().
-3. Initialize the server address with IP address 127.0.0.1 and port number 8080.
-4. Connect to the server using connect().
-5. Read the filename from the user.
-6. Send the filename to the server using send().
-7. Display the server response.
-8. Receive the file contents from the server using recv().
-9. Display the received file contents on the screen.
-10. Continue receiving until the server closes the connection.
-11. Close the socket using close().
+
+ALGORITHM FOR TCP SERVER AND CLIENT
+
+SERVER (server.c)
+
+1. Start the program.
+2. Include stdio.h, stdlib.h, string.h, unistd.h, sys/socket.h, arpa/inet.h and sys/types.h.
+3. Define port number as 8080.
+4. Declare sockfd, new_sock, pid, filename[], buffer[], fp, server_addr and client_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, INADDR_ANY and port 8080.
+7. Bind the socket using bind().
+8. Listen for client connections using listen().
+9. Display "File Server Running".
+10. Repeat continuously:
+    - Accept client connection using accept().
+    - Create a child process using fork().
+    - In the child process:
+      a. Close the server socket.
+      b. Receive filename using recv().
+      c. Open the file using fopen() in read mode.
+      d. Send server PID to the client.
+      e. If file does not exist, send an error message.
+      f. Otherwise, read contents using fgets().
+      g. Send file contents using send().
+      h. Close the file and client socket.
+      i. Terminate child process using exit().
+    - In the parent process, close the client socket.
+11. Stop the program.
+
+---------------- CLIENT (client.c) ----------------
+
+1. Start the program.
+2. Include stdio.h, string.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, filename[], buffer[] and server_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, port 8080 and IP 127.0.0.1.
+7. Connect to the server using connect().
+8. Read the filename from the user.
+9. Send the filename using send().
+10. Receive the server response and file contents using recv().
+11. Display the received file contents.
+12. Continue receiving until the server closes the connection.
+13. Close the socket using close().
+14. Stop the program.

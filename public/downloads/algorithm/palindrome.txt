@@ -1,29 +1,42 @@
-Server Algorithm:
+
+ALGORITHM FOR TCP SERVER AND CLIENT
+
+SERVER (server.c)
+
 1. Start the program.
-2. Create a UDP socket using socket().
-3. Initialize the server address structure.
-4. Assign the IP address as INADDR_ANY and port number as 8080.
-5. Bind the socket to the server address using bind().
-6. Receive a string from the client using recvfrom().
-7. Remove the newline character from the received string.
-8. Initialize i = 0 and j = strlen(str) - 1.
-9. Compare the characters at positions i and j.
-10. If both characters are not equal, set flag = 0 and stop the comparison.
-11. Otherwise, increment i and decrement j.
-12. Repeat steps 9–11 until i becomes greater than or equal to j.
-13. If flag = 1, store "Palindrome" in the result.
-14. Otherwise, store "Not Palindrome" in the result.
-15. Send the result to the client using sendto().
-16. Close the socket using close().
-17. Stop the program.
-Client Algorithm:
+2. Include stdio.h, string.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, new_sock, str[], result[], i, j, flag, server_addr and client_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, INADDR_ANY and port 8080.
+7. Bind the socket using bind().
+8. Listen for client connections using listen().
+9. Accept the client connection using accept().
+10. Receive the string using recv().
+11. Initialize i = 0 and j = strlen(str) - 1.
+12. Initialize flag = 1.
+13. Compare characters using a while loop:
+    - Repeat while i < j.
+    - If str[i] != str[j], set flag = 0.
+    - Otherwise, increment i and decrement j.
+14. If flag = 1, store "Palindrome".
+15. Otherwise, store "Not Palindrome".
+16. Send the result using send().
+17. Close the client and server sockets using close().
+18. Stop the program.
+
+---------------- CLIENT (client.c) ----------------
+
 1. Start the program.
-2. Create a UDP socket using socket().
-3. Initialize the server address structure.
-4. Assign the server IP address as 127.0.0.1 and port number as 8080.
-5. Read a string from the user using fgets().
-6. Send the string to the server using sendto().
-7. Receive the result from the server using recvfrom().
-8. Display whether the string is Palindrome or Not Palindrome.
-9. Close the socket using close().
-10. Stop the program.
+2. Include stdio.h, string.h, unistd.h, sys/socket.h and arpa/inet.h.
+3. Define port number as 8080.
+4. Declare sockfd, str[], result[] and server_addr.
+5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+6. Initialize server address with AF_INET, port 8080 and IP 127.0.0.1.
+7. Connect to the server using connect().
+8. Read a string using fgets().
+9. Send the string using send().
+10. Receive the result using recv().
+11. Display Palindrome or Not Palindrome.
+12. Close the socket using close().
+13. Stop the program.
