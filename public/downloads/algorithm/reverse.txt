@@ -3,38 +3,34 @@ ALGORITHM FOR TCP SERVER AND CLIENT
 
 SERVER (server.c)
 
-1. Start the program.
-2. Include stdio.h, unistd.h, sys/socket.h and arpa/inet.h.
-3. Define port number as 8080.
-4. Declare sockfd, new_sock, num, rev, digit, server_addr and client_addr.
-5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
-6. Initialize server address with AF_INET, INADDR_ANY and port 8080.
-7. Bind the socket using bind().
-8. Listen for client connections using listen().
-9. Accept the client connection using accept().
-10. Receive the number using recv().
-11. Initialize rev = 0.
-12. Reverse the number using a while loop:
-    - Repeat while num > 0.
-    - Extract digit = num % 10.
-    - Calculate rev = rev * 10 + digit.
-    - Update num = num / 10.
-13. Send the reversed number using send().
-14. Close the client and server sockets using close().
-15. Stop the program.
+Start the program.
+Include stdio.h, string.h, unistd.h, sys/socket.h and arpa/inet.h.
+Define port number as 8080.
+Declare server_fd, new_socket, str and server_addr.
+Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+Initialize server address with AF_INET, INADDR_ANY and port 8080.
+Bind the socket using bind().
+Listen for client connections using listen().
+Accept the client connection using accept().
+Receive the string from the client using read().
+Reverse the string using the library function strrev().
+Send the reversed string to the client using write().
+Display the reversed string.
+Close the client and server sockets using close().
+Stop the program.
 
 ---------------- CLIENT (client.c) ----------------
 
-1. Start the program.
-2. Include stdio.h, unistd.h, sys/socket.h and arpa/inet.h.
-3. Define port number as 8080.
-4. Declare sockfd, num, result and server_addr.
-5. Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
-6. Initialize server address with AF_INET, port 8080 and IP 127.0.0.1.
-7. Connect to the server using connect().
-8. Read a number using scanf().
-9. Send the number using send().
-10. Receive the reversed number using recv().
-11. Display the reversed number.
-12. Close the socket using close().
-13. Stop the program.
+Start the program.
+Include stdio.h, string.h, unistd.h, sys/socket.h and arpa/inet.h.
+Define port number as 8080.
+Declare sock, str and serv_addr.
+Create a TCP socket using socket() with AF_INET and SOCK_STREAM.
+Initialize server address with AF_INET, port 8080 and IP address 127.0.0.1.
+Connect to the server using connect().
+Read a string from the user using scanf().
+Send the string to the server using write().
+Receive the reversed string using read().
+Display the reversed string.
+Close the socket using close().
+Stop the program.
