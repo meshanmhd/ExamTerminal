@@ -1,20 +1,18 @@
-//server.c
+
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 
 #define PORT 8080
-#define MAX 100
 
 int main()
 {
     int server_fd, new_socket;
+    char str[100];
+
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-    char str[MAX];
-    int len;
 
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -23,19 +21,23 @@ int main()
     address.sin_port = htons(PORT);
 
     bind(server_fd, (struct sockaddr *)&address, sizeof(address));
+
     listen(server_fd, 3);
 
-    printf("Waiting for client connection...\n");
+    printf("Waiting for client...\n");
 
-    new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t *)&addrlen);
+    new_socket = accept(server_fd, (struct sockaddr *)&address,
+                        (socklen_t *)&addrlen);
 
     read(new_socket, str, sizeof(str));
 
-    len = strlen(str);
+    printf("Received string: %s\n", str);
 
-    write(new_socket, &len, sizeof(int));
+    strrev(str);
 
-    printf("Length of String Sent to Client: %d\n", len);
+    write(new_socket, str, sizeof(str));
+
+    printf("Reversed string: %s\n", str);
 
     close(new_socket);
     close(server_fd);
@@ -44,22 +46,22 @@ int main()
 }
 
 
+
 //client.c
+
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 
 #define PORT 8080
-#define MAX 100
 
 int main()
 {
-    int sock = 0;
+    int sock;
+    char str[100];
+
     struct sockaddr_in serv_addr;
-    char str[MAX];
-    int len;
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -71,13 +73,13 @@ int main()
     connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
 
     printf("Enter a string: ");
-    scanf("%99s", str);
+    scanf(" %[^\n]", str);
 
     write(sock, str, sizeof(str));
 
-    read(sock, &len, sizeof(int));
+    read(sock, str, sizeof(str));
 
-    printf("\nLength of String Received from Server: %d\n", len);
+    printf("Reversed string: %s\n", str);
 
     close(sock);
 
